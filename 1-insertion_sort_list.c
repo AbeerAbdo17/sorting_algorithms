@@ -9,7 +9,7 @@ void insertion_sort_list(listint_t **list)
 {
 	if (list != NULL && *list != NULL && (*list)->next != NULL)
 	{
-		listint_t *xcurr, *xtmp, *temp;
+		listint_t *xcurr, *xtmp, *temper;
 
 		xcurr = (*list)->next;
 
@@ -20,21 +20,21 @@ void insertion_sort_list(listint_t **list)
 
 			while (xtmp->prev != NULL && xtmp->n < xtmp->prev->n)
 			{
-				temp = xtmp->prev;
+				temper = xtmp->prev;
 
 				if (xtmp->next != NULL)
-					xtmp->next->prev = temp;
+					xtmp->next->prev = temper;
 
-				temp->next = xtmp->next;
-				xtmp->prev = temp->prev;
-				temp->prev = xtmp;
+				temper->next = xtmp->next;
+				xtmp->prev = temper->prev;
+				temper->prev = xtmp;
 
 				if (xtmp->prev != NULL)
 					xtmp->prev->next = xtmp;
 				else
 					*list = xtmp;
 
-				xtmp->next = temp;
+				xtmp->next = temper;
 
 				print_list((const listint_t *)*list);
 			}
