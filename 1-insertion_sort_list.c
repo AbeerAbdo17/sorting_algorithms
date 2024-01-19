@@ -5,37 +5,38 @@
  * insertion_sort_list - Sorts a doubly linked list using Insertion sort
  * @list: Pointer
  */
-
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *xleadv, *xfllv, *xnwv, *xtmpv;
+	listint_t *xcurr, *xtmp;
 
-	if (!list || !(*list) || !((*list)->next))
+	if (list || *list || (*list)->next)
 	{
-		xfllv = (*list);
-		xleadv = (*list)->next;
-		while (xleadv)
+
+		xcurr = (*list)->next;
+
+		while (xcurr != NULL)
 		{
-			xnwv = xleadv->next;
-			while (xfllv && xleadv->n < xfllv->n)
+			xtmp = xcurr;
+
+			while (xtmp->prev != NULL && xtmp->n < xtmp->prev->n)
 			{
-				if (xfllv->prev)
-					xfllv->prev->next = xleadv;
+				if (xtmp->next != NULL)
+					xtmp->next->prev = xtmp->prev;
+				xtmp->prev->next = xtmp->next;
+				xtmp->next = xtmp->prev;
+				xtmp->prev = xtmp->prev->prev;
+				xtmp->next->prev = xtmp;
+
+				if (xtmp->prev != NULL)
+					xtmp->prev->next = xtmp;
 				else
-					*list = xleadv;
-				if (xleadv->next)
-					xleadv->next->prev = xfllv;
-				xtmpv = xleadv->next;
-				xleadv->next = xfllv;
-				xleadv->prev = xfllv->prev;
-				xfllv->next = xtmpv;
-				xfllv->prev = xleadv;
+					*list = xtmp;
+
 				print_list(*list);
-				xfllv = xleadv->prev;
 			}
-			xleadv = xnwv;
-			if (xleadv)
-				xfllv = xleadv->prev;
+
+			xcurr = xcurr->next;
 		}
 	}
 }
+
