@@ -3,71 +3,74 @@
 /**
  * lomuto - partition scheme
  * @array: input
- * @low: input
- * @high: input
- * @size: input
- * Return: index
+ * @xfirst: First element
+ * @xlast: Last element
+ * @size: Size 
+ * Return: position of last element sorted
  */
-int lomuto(int *array, int low, int high, size_t size)
+int lomuto(int *array, ssize_t xfirst, ssize_t xlast, size_t size)
 {
-	int xpv = array[high];
-	int xtmp, yv, xv = low - 1;
+	int xpivot = array[xlast];
+	ssize_t xcurrent = xfirst, xfinder;
 
-	for (yv = low; yv <= high - 1; yv++)
+	for (xfinder = xfirst; xfinder < xlast; xfinder++)
 	{
-		if (array[yv] < xpv)
+		if (array[xfinder] < xpivot)
 		{
-			xv++;
-			if (xv != yv)
+			if (array[xcurrent] != array[xfinder])
 			{
-				xtmp = array[xv];
-				array[xv] = array[yv];
-				array[yv] = xtmp;
+
+				int xtmp = array[xcurrent];
+				array[xcurrent] = array[xfinder];
+				array[xfinder] = xtmp;
 
 				print_array(array, size);
 			}
+			xcurrent++;
 		}
 	}
 
-	xv++;
-	if (xv != high)
+	if (array[xcurrent] != array[xlast])
 	{
-		xtmp = array[xv];
-		array[xv] = array[high];
-		array[high] = xtmp;
+		int xtmp = array[xcurrent];
+
+		array[xcurrent] = array[xlast];
+		array[xlast] = xtmp;
 
 		print_array(array, size);
 	}
 
-	return (xv);
+	return (xcurrent);
 }
 
 /**
- * quickRec - Recursive function
+ * quickRec - Quicksort
  * @array: input
- * @low: input
- * @high: input
- * @size: input
+ * @xfirst: First element
+ * @xlast: Last element
+ * @size: size
  */
-void quickRec(int *array, int low, int high, size_t size)
+void quickRec(int *array, ssize_t xfirst, ssize_t xlast, int size)
 {
-	if (low < high)
-	{
-		int xpv = lomuto(array, low, high, size);
+	ssize_t xpv = 0;
 
-		quickRec(array, low, xpv - 1, size);
-		quickRec(array, xpv + 1, high, size);
+	if (xfirst < xlast)
+	{
+		xpv = lomuto(array, xfirst, xlast, size);
+
+		quickRec(array, xfirst, xpv - 1, size);
+		quickRec(array, xpv + 1, xlast, size);
 	}
 }
 
 /**
- * quick_sort -  sorts an array of integers using the Quick sort
- * @array: input
- * @size: input
+ * quick_sort -  sorts an array of integers using the Quick sort 
+ * @array: Array
+ * @size: Array size
  */
 void quick_sort(int *array, size_t size)
 {
-	if (!array || !size)
+	if (!array || size < 2)
 		return;
 
 	quickRec(array, 0, size - 1, size);
