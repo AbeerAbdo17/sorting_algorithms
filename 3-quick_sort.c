@@ -5,7 +5,7 @@
  * @array: input
  * @xfirst: First element
  * @xlast: Last element
- * @size: Size 
+ * @size: Size
  * Return: position of last element sorted
  */
 int lomuto(int *array, ssize_t xfirst, ssize_t xlast, size_t size)
@@ -21,6 +21,7 @@ int lomuto(int *array, ssize_t xfirst, ssize_t xlast, size_t size)
 			{
 
 				int xtmp = array[xcurrent];
+
 				array[xcurrent] = array[xfinder];
 				array[xfinder] = xtmp;
 
@@ -64,7 +65,7 @@ void quickRec(int *array, ssize_t xfirst, ssize_t xlast, int size)
 }
 
 /**
- * quick_sort -  sorts an array of integers using the Quick sort 
+ * quick_sort -  sorts an array of integers using the Quick sort
  * @array: Array
  * @size: Array size
  */
