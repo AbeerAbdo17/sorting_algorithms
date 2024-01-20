@@ -1,81 +1,74 @@
 #include "sort.h"
 
 /**
- * swap - Swaps two integers in an array
- * @a: Pointer to the first integer
- * @b: Pointer to the second integer
+ * lomuto - partition scheme
+ * @array: input
+ * @low: input
+ * @high: input
+ * @size: input
+ * Return: index
  */
-void swap(int *a, int *b)
+int lomuto(int *array, int low, int high, size_t size)
 {
-	int temp;
-	
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
+	int xpv = array[high];
+	int xtmp, yv, xv = low - 1;
 
-/**
- * lomuto_partition - Lomuto partition scheme for quicksort
- * @array: Array to be partitioned
- * @low: Starting index of the partition
- * @high: Ending index of the partition
- * @size: Size of the array
- *
- * Return: Index of the pivot after partitioning
- */
-int lomuto_partition(int *array, int low, int high, size_t size)
-{
-	int pivot = array[high];
-	int i = low - 1, j;
-
-	for (j = low; j <= high - 1; j++)
+	for (yv = low; yv <= high - 1; yv++)
 	{
-		if (array[j] < pivot)
+		if (array[yv] < xpv)
 		{
-			i++;
-			if (i != j)
+			xv++;
+			if (xv != yv)
 			{
-				swap(&array[i], &array[j]);
+				xtmp = array[xv];
+				array[xv] = array[yv];
+				array[yv] = xtmp;
+
 				print_array(array, size);
 			}
 		}
 	}
-	i++;
-	if (i != high)
+
+	xv++;
+	if (xv != high)
 	{
-		swap(&array[i], &array[high]);
+		xtmp = array[xv];
+		array[xv] = array[high];
+		array[high] = xtmp;
+
 		print_array(array, size);
 	}
-	return (i);
+
+	return (xv);
 }
 
 /**
- * quicksort - Recursive function to perform quicksort
- * @array: Array to be sorted
- * @low: Starting index of the partition
- * @high: Ending index of the partition
- * @size: Size of the array
+ * quickRec - Recursive function
+ * @array: input
+ * @low: input
+ * @high: input
+ * @size: input
  */
-void quicksort(int *array, int low, int high, size_t size)
+void quickRec(int *array, int low, int high, size_t size)
 {
 	if (low < high)
 	{
-		int pivot_idx = lomuto_partition(array, low, high, size);
+		int xpv = lomuto(array, low, high, size);
 
-		quicksort(array, low, pivot_idx - 1, size);
-		quicksort(array, pivot_idx + 1, high, size);
+		quickRec(array, low, xpv - 1, size);
+		quickRec(array, xpv + 1, high, size);
 	}
 }
 
 /**
- * quick_sort - Sorts an array of integers using quicksort algorithm
- * @array: Array to be sorted
- * @size: Size of the array
+ * quick_sort -  sorts an array of integers using the Quick sort
+ * @array: input
+ * @size: input
  */
 void quick_sort(int *array, size_t size)
 {
 	if (array == NULL || size < 2)
 		return;
 
-	quicksort(array, 0, size - 1, size);
+	quickRec(array, 0, size - 1, size);
 }
