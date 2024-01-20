@@ -3,20 +3,21 @@
 /**
  * lomuto - Lomuto partition scheme
  * @array: input array
- * @low: low index
- * @high: high index
- * @size: size of array
- * Return: idex
+ * @low: low index of the partition
+ * @high: high index of the partition
+ * @size: size of the array
+ * Return: index of the pivot after partitioning
  */
 int lomuto(int *array, int low, int high, size_t size)
 {
 	int xpv = array[high];
-	int xtmp, yv, xv = low;
+	int xtmp, yv, xv = low - 1;
 
-	for (yv = low; yv < high; yv++)
+	for (yv = low; yv <= high - 1; yv++)
 	{
 		if (array[yv] < xpv)
 		{
+			xv++;
 			if (xv != yv)
 			{
 				xtmp = array[xv];
@@ -25,10 +26,10 @@ int lomuto(int *array, int low, int high, size_t size)
 
 				print_array(array, size);
 			}
-			xv++;
 		}
 	}
 
+	xv++;
 	if (xv != high)
 	{
 		xtmp = array[xv];
@@ -42,11 +43,11 @@ int lomuto(int *array, int low, int high, size_t size)
 }
 
 /**
- * quickRec - Recursive function
+ * quickRec - Recursive function for Quick sort
  * @array: input array
- * @low: low index
- * @high: high index
- * @size: size of array
+ * @low: low index of the partition
+ * @high: high index of the partition
+ * @size: size of the array
  */
 void quickRec(int *array, int low, int high, size_t size)
 {
@@ -61,9 +62,9 @@ void quickRec(int *array, int low, int high, size_t size)
 }
 
 /**
- * quick_sort - Sorts an array of integers using Quick sort
+ * quick_sort - Sorts an array of integers in ascending order using Quick sort
  * @array: input array
- * @size: size of array
+ * @size: size of the array
  */
 void quick_sort(int *array, size_t size)
 {
