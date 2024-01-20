@@ -1,45 +1,52 @@
 #include "sort.h"
+
 /**
- * lomuto - partition scheme
- * @array: input
- * @low: input
- * @high: input
- * @size: input
- * Return: index
+ * lomuto - Lomuto partition scheme
+ * @array: input array
+ * @low: low index
+ * @high: high index
+ * @size: size of array
+ * Return: idex
  */
 int lomuto(int *array, int low, int high, size_t size)
 {
 	int xpv = array[high];
-	int xtmp, yv, xv = low - 1;
+	int xtmp, yv, xv = low;
 
-	for (yv = low; yv <= high - 1; yv++)
+	for (yv = low; yv < high; yv++)
 	{
 		if (array[yv] < xpv)
 		{
-			xv++;
-			xtmp = array[xv];
-			array[xv] = array[yv];
-			array[yv] = xtmp;
+			if (xv != yv)
+			{
+				xtmp = array[xv];
+				array[xv] = array[yv];
+				array[yv] = xtmp;
 
-			print_array(array, size);
+				print_array(array, size);
+			}
+			xv++;
 		}
 	}
 
-	xtmp = array[xv + 1];
-	array[xv + 1] = array[high];
-	array[high] = xtmp;
+	if (xv != high)
+	{
+		xtmp = array[xv];
+		array[xv] = array[high];
+		array[high] = xtmp;
 
-	print_array(array, size);
+		print_array(array, size);
+	}
 
-	return (xv + 1);
+	return (xv);
 }
 
 /**
- *  quickRec - Recursive function
- * @array: input
- * @low: input
- * @high: input
- * @size: input
+ * quickRec - Recursive function
+ * @array: input array
+ * @low: low index
+ * @high: high index
+ * @size: size of array
  */
 void quickRec(int *array, int low, int high, size_t size)
 {
@@ -54,19 +61,14 @@ void quickRec(int *array, int low, int high, size_t size)
 }
 
 /**
- * quick_sort -  sorts an array of integers using the Quick sort
- * @array: input
- * @size: input
+ * quick_sort - Sorts an array of integers using Quick sort
+ * @array: input array
+ * @size: size of array
  */
 void quick_sort(int *array, size_t size)
 {
-	if (size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	print_array(array, size);
-
 	quickRec(array, 0, size - 1, size);
-
-	print_array(array, size);
 }
-
