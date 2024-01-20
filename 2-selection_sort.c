@@ -10,23 +10,26 @@ void selection_sort(int *array, size_t size)
 	size_t xv, yv, minidx;
 	int xtmp;
 
-	for (xv = 0; xv < size - 1; xv++)
+	if (array || size)
 	{
-		minidx = xv;
-
-		for (yv = xv + 1; yv < size; yv++)
+		for (xv = 0; xv < size - 1; xv++)
 		{
-			if (array[yv] < array[minidx])
+			minidx = xv;
+
+			for (yv = xv + 1; yv < size; yv++)
 			{
-
+				if (array[yv] < array[minidx])
+				{
+					minidx = yv;
+				}
+			}
+			if (minidx != xv)
+			{
 				xtmp = array[xv];
-				array[xv] = array[yv];
-				array[yv] = xtmp;
-
-
+				array[xv] = array[minidx];
+				array[minidx] = xtmp;
 				print_array(array, size);
 			}
 		}
 	}
 }
-
