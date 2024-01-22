@@ -29,6 +29,7 @@ void quick_sort(int *array, size_t size);
 
 void shell_sort(int *array, size_t size);
 void cocktail_sort_list(listint_t **head);
+void counting_sort(int *array, size_t size);
 
 void swap_nodes(listint_t **head, listint_t **xtail, listint_t **xcurrent, int xdirection);
 #endif
