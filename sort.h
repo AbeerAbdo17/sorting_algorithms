@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 /**
  * struct listint_s - Doubly linked list node
@@ -27,4 +28,7 @@ void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 
 void shell_sort(int *array, size_t size);
+void cocktail_sort_list(listint_t **head);
+
+void swap_nodes(listint_t **head, listint_t **xtail, listint_t **xcurrent, int xdirection);
 #endif
